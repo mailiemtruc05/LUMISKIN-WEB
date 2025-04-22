@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="master/head :: head"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Spinner -->
+<div th:replace="master/layout-spinner :: spinner"></div>
+
+<!-- Navbar -->
+<div th:replace="master/layout-navbar :: navbar"></div>
+
+<!-- Main content -->
+<main class="flex-fill d-flex align-items-center justify-content-center" style="margin-top: 100px;">
+    <div class="text-center px-3">
+
+        <!-- Tiêu đề -->
+        <h1 class="fw-bold text-pink" style="font-size: 2.8rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">
+            Lịch Sử Đơn Hàng
+        </h1>
+
+        <!-- Lịch sử đơn hàng -->
+        <div class="mt-4 text-start">
+            <h4>Danh sách đơn hàng của bạn</h4>
+
+            <!-- Card chứa bảng chi tiết -->
+            <div class="card shadow-sm mt-3" style="max-height: 450px; overflow-y: auto; border-radius: 1rem;">
+                <div class="card-body p-0">
+                    <table class="table mb-0 table-hover">
+                        <thead class="table-light" style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày tạo</th>
+                            <th>Tổng tiền</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Chi tiết</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.maDH}"></td>
+                            <td th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${#numbers.formatInteger(order.giaTien, 0, 'POINT')} + ' ₫'"></td>
+                            <td th:text="${order.pttt}"></td>
+                            <td>
+                                <a th:href="@{'/order-detail/' + ${order.maDH}}" class="btn btn-pink btn-sm">
+                                    Xem chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nút trở về trang chủ -->
+        <a href="/home" class="btn btn-outline-pink btn-lg mt-4">
+            <i class="bi bi-house-door-fill me-2"></i>Trở về trang chủ
+        </a>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="master/layout-footer :: footer"></div>
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-pink btn-lg-square rounded-circle back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</a>
+
+<!-- JS Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Template JS -->
+<script src="js/main.js"></script>
+</body>
+</html>

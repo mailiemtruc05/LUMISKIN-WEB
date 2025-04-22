@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="master/head::head"></div>
+<body>
+<!-- Spinner Start -->
+<div th:replace="master/layout-spinner::spinner"></div>
+<!-- Spinner End -->
+
+<!-- Navbar Start -->
+<div th:replace="master/layout-navbar::navbar"></div>
+<!-- Navbar End -->
+
+<!-- Carousel Start -->
+<div th:replace="master/layout-carousel::carousel"></div>
+
+<section class="ftco-section ftco-cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cart-list">
+                    <table class="table">
+                        <thead class="thead-primary">
+                        <tr class="text-center">
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-center"
+                            th:each="item : ${CARTITEMS}"
+                            th:attr="data-product-id=${item.product.id}">
+                            <!-- nút xóa -->
+                            <td class="product-remove">
+                                <a href="#"
+                                   class="btn-remove"
+                                   th:attr="data-id=${item.product.id}">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <!-- ảnh sản phẩm -->
+                            <td class="image-prod">
+                                <img th:src="${#strings.startsWith(item.product.image, 'http')
+                                    ? item.product.image
+                                    : '/img/' + item.product.image}"
+                                     onerror="this.onerror=null; this.src='/img/default.jpg';"
+                                     class="img" />
+                            </td>
+                            <!-- tên sản phẩm -->
+                            <td class="product-name">
+                                <h3 th:text="${item.productName}">Tên sản phẩm</h3>
+                            </td>
+                            <!-- giá -->
+                            <td class="price"
+                                th:text="${#numbers.formatDecimal(item.price, 1, 'POINT', 0, 'COMMA')} + ' đ'">
+                                100.000 đ
+                            </td>
+                            <!-- số lượng -->
+                            <td class="quantity">
+                                <div class="d-inline-flex align-items-center">
+                                    <a href="#"
+                                       class="quantity-left-minus btn btn-light border me-1"
+                                       th:attr="data-id=${item.product.id}">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </a>
+                                    <input type="text"
+                                           readonly
+                                           class="form-control text-center me-1"
+                                           th:attr="id=|quantity-${item.product.id}|"
+                                           th:value="${item.quantity}"
+                                           style="width:60px" />
+                                    <a href="#"
+                                       class="quantity-right-plus btn btn-light border"
+                                       th:attr="data-id=${item.product.id}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </td>
+                            <!-- thành tiền dòng -->
+                            <td class="total"
+                                th:attr="id=|lineTotal-${item.product.id}|"
+                                th:text="${#numbers.formatDecimal(item.quantity * item.price, 0, 'COMMA', 0, 'POINT')} + ' đ'">
+                                0 đ
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tổng tiền -->
+        <div class="row justify-content-center">
+            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap">
+                <div class="cart-total mb-3">
+                    <h3>Cart Totals</h3>
+                    <p class="d-flex">
+                        <span>Subtotal</span>
+                        <span id="cartSubtotal"
+                              th:text="${#numbers.formatDecimal(TOTAL, 1, 'POINT', 0, 'COMMA')} + ' đ'">
+                  250.000 đ
+                </span>
+                    </p>
+                    <p class="d-flex">
+                        <span>Discount</span>
+                        <span>0</span>
+                    </p>
+                    <hr />
+                    <p class="d-flex total-price">
+                        <span>Total</span>
+                        <span id="cartTotal"
+                              th:text="${#numbers.formatDecimal(TOTAL, 1, 'POINT', 0, 'COMMA')} + ' đ'">
+                  250.000 đ
+                </span>
+                    </p>
+                </div>
+                <p class="text-center">
+                    <a href="pay" class="btn btn-pink border-radius py-3 px-4">
+                        Proceed to Checkout
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer start -->
+<div th:replace="master/layout-footer::footer"></div>
+<!-- Footer End -->
+
+<!-- Back to Top -->
+<a href="#"
+   class="btn btn-lg btn-pink btn-lg-square rounded-circle back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</a>
+
+<!-- Thư viện JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+
+
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>

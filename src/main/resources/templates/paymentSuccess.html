@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="master/head :: head"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Spinner -->
+<div th:replace="master/layout-spinner :: spinner"></div>
+
+<!-- Navbar -->
+<div th:replace="master/layout-navbar :: navbar"></div>
+
+<!-- Main content -->
+<main class="flex-fill d-flex align-items-center justify-content-center" style="margin-top: 100px;">
+    <div class="text-center px-3">
+
+        <!-- Icon thành công -->
+        <div class="mb-4">
+            <i class="bi bi-patch-check-fill text-success" style="font-size: 5rem;"></i>
+        </div>
+
+        <!-- Tiêu đề -->
+        <h1 class="fw-bold text-success" style="font-size: 2.8rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">
+            Cảm ơn bạn đã đặt hàng!
+        </h1>
+        <p class="text-muted fs-5">LUMISKIN rất trân trọng sự ủng hộ của bạn.</p>
+
+        <!-- Thông tin khách hàng -->
+        <div class="mt-4 text-start">
+            <h4>Thông tin khách hàng</h4>
+            <p><strong>Họ tên:</strong> <span th:text="${order.tenKhachHang}"></span></p>
+            <p><strong>Ngày sinh:</strong> <span th:text="${order.ngaySinh}"></span></p>
+            <p><strong>Số điện thoại:</strong> <span th:text="${order.soDienThoai}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${order.email}"></span></p>
+            <p><strong>Địa chỉ:</strong> <span th:text="${order.diaChi}"></span></p>
+            <p><strong>Phương thức thanh toán:</strong> <span th:text="${order.pttt}"></span></p>
+        </div>
+
+        <!-- Chi tiết đơn hàng -->
+        <div class="mt-4 text-start">
+            <h4>Chi tiết đơn hàng</h4>
+
+            <!-- Card chứa bảng chi tiết -->
+            <div class="card shadow-sm mt-3" style="max-height: 350px; overflow-y: auto; border-radius: 1rem;">
+                <div class="card-body p-0">
+                    <table class="table mb-0 table-hover">
+                        <thead class="table-light" style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${orderDetails}">
+                            <td th:text="${item.tenSanPham}"></td>
+                            <td th:text="${item.soLuong}"></td>
+                            <td th:text="${#numbers.formatInteger(item.donGia, 0, 'POINT')} + ' ₫'"></td>
+                            <td th:text="${#numbers.formatInteger(item.thanhTien, 0, 'POINT')} + ' ₫'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tổng tiền -->
+        <h5 class="mt-4">Tổng cộng: <span th:text="${#numbers.formatInteger(total, 0, 'POINT')}"></span> VND</h5>
+
+        <!-- Nút trở về trang chủ -->
+        <a href="/" class="btn btn-success btn-lg mt-4">
+            <i class="bi bi-house-door-fill me-2"></i>Trở về trang chủ
+        </a>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="master/layout-footer :: footer"></div>
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-pink btn-lg-square rounded-circle back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</a>
+
+<!-- JS Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- Template JS -->
+<script src="js/main.js"></script>
+</body>
+</html>
