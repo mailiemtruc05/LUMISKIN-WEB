@@ -1,0 +1,144 @@
+<div
+        th:fragment="navbar"
+        class="  container-fluid fixed-top px-0 wow fadeIn"
+        data-wow-delay="0.1s"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+    <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
+        <div class="col-lg-6 px-5 text-start">
+            <small
+            ><i class="fa fa-map-marker-alt me-2"></i>02 Võ Oanh, Bình Thạnh, TP.HCM</small
+            >
+            <small class="ms-4"
+            ><i class="fa fa-envelope me-2"></i>lumiskinhere@gmail.com</small
+            >
+        </div>
+        <div class="col-lg-6 px-5 text-end">
+            <small>Follow us:</small>
+            <a class="text-body ms-3" href=""
+            ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a class="text-body ms-3" href=""><i class="fab fa-twitter"></i></a>
+            <a class="text-body ms-3" href=""
+            ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a class="text-body ms-3" href=""><i class="fab fa-instagram"></i></a>
+            <span class="text-body ms-3" sec:authorize="isAuthenticated()">
+                Hi!
+                <a href="/account"><b><span sec:authentication="name"></span></b></a>
+            </span>
+            <span class="text-body ms-3" sec:authorize="isAnonymous()">
+               <b>"Vui lòng đăng nhập!"</b>
+            </span>
+        </div>
+    </div>
+    <nav
+            class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn"
+            data-wow-delay="0.1s"
+    >
+        <a href="/" class="navbar-brand ms-4 ms-lg-0">
+            <h1 class="fw-bold text-primary m-0">
+            <span class="text-secondary">
+            <img class="logo" th:src="@{/img/logo.png}" alt="Image" />
+
+            </span>
+            </h1>
+        </a>
+        <button
+                type="button"
+                class="navbar-toggler me-4"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav top ms-auto p-lg-0">
+                <!-- <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="about.html" class="nav-item nav-link">About Us</a>
+
+                <div class="nav-item dropdown">
+                  <a
+                    href="#"
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    >Products</a
+                  >
+                    <div class="dropdown-menu">
+                      <a href="blog.html" class="dropdown-item">Chăm sóc da</a>
+                      <a href="feature.html" class="dropdown-item">Make Up</a>
+                      <a href="testimonial.html" class="dropdown-item">Ưu đãi đặc biệt</a>
+                  </div>
+                </div>
+
+                <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                 -->
+                <div class="menu" id="navar">
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="drop-menu">
+                            <a href="/product">Products <span>&#11167</span></a>
+                            <div class="sub-menu">
+                                <ul>
+                                    <li>
+                                        <img class="logo-submenu" th:src="@{/img/logo-submenu.jpg}" alt="Image" />
+                                    </li>
+                                </ul>
+                                <ul th:each="category : ${categories}">
+                                    <li>
+                                        <h4>
+                                            <a class="submenu-h4" th:href="@{'/product?cat=' + ${category.id}}" th:text="${category.cname}"></a>
+                                        </h4>
+
+
+                                        <ul>
+                                            <li th:each="sub : ${category.subCategories}">
+                                                <a th:href="@{'/product?sub=' + ${sub.id}}" th:text="${sub.subname}"></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="drop-two">
+                            <a href="#">About us <span>&#11167</span></a>
+                            <div class="menu-two">
+                                <ul>
+                                    <li><a href="/contact">Liên hệ với chúng tôi</a> </li>
+                                    <li><a href="/about">Về Cosmetics</a></li>
+                                    <li><a href="/lie">Đổi trả sản phẩm</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-none d-lg-flex ms-2">
+                <form action="/search" method="get" id="search-box">
+                    <input type="text" name="query" id="search-text" placeholder="Bạn muốn tìm gì?" required>
+                    <button id="search-btn">
+                        <small class="fa fa-search text-body"></small>
+                    </button>
+                </form>
+
+                </a>
+                <a class="btn-sm-square bg-white rounded-circle ms-3" href="/admin2">
+                    <small class="fa fa-user text-body"></small>
+                </a>
+                <a class="btn-sm-square bg-white rounded-circle ms-3" href="/shopping-cart">
+                    <small class="fa fa-shopping-bag text-body"></small>
+                </a>
+                <!-- ✅ Nút lịch sử -->
+                <a class="btn-sm-square bg-white rounded-circle ms-3" href="/history">
+                    <small class="fa fa-history text-body"></small>
+                </a>
+                <a th:href="@{/logout}" class="logout-btn" onclick="logout()">
+                    <i class="fa fa-sign-out-alt"></i> <!-- Đổi thành "fa-sign-out-alt" -->
+                </a>
+
+            </div>
+        </div>
+    </nav>
+</div>

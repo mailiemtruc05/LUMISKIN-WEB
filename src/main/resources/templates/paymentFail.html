@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Thanh toán thất bại</title>
+    <link rel="icon" th:href="@{/img/favicon.png}">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            height: 100vh;
+            background: radial-gradient(
+                    circle at top left,
+                    #f9d5ec,
+                    #ffdede,
+                    #ffe5ec
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("https://cdn.jsdelivr.net/gh/creativetimofficial/public-assets/patterns/particles.svg")
+            repeat;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            animation: popUp 0.6s ease;
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #e63946;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 17px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        a.btn {
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(to right, #ff6a6a, #f94d6a);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 135, 0.3);
+        }
+
+        a.btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 105, 135, 0.4);
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="particles"></div>
+<div class="container">
+    <svg
+            class="error-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+    >
+        <circle cx="12" cy="12" r="10" fill="#e63946" />
+        <path
+                d="M8 8L16 16M16 8L8 16"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+        />
+    </svg>
+    <h2 th:text="${message}">Giao dịch thất bại!</h2>
+    <p>
+        Hệ thống đã gặp sự cố khi xử lý thanh toán. Vui lòng thử lại hoặc liên
+        hệ bộ phận hỗ trợ để được giúp đỡ.
+    </p>
+    <a class="btn" th:href="@{/pay}">← Quay lại trang thanh toán</a>
+</div>
+</body>
+</html>
+

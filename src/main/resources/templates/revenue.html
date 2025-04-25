@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê doanh thu</title>
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/img/favicon.png}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            padding: 40px;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #d94f4f;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ff8c94;
+            color: white;
+        }
+
+        canvas {
+            display: block;
+            margin: 30px auto;
+            max-width: 900px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px;
+        }
+
+        select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin: 0 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff8c94;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #ff6f91;
+        }
+
+        a button {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Thống kê doanh thu</h1>
+
+<div class="controls">
+    <label for="chartType">Loại biểu đồ: </label>
+    <select id="chartType" onchange="updateChartType()">
+        <option value="line">Đường</option>
+        <option value="bar">Cột</option>
+        <option value="pie">Tròn</option>
+        <option value="doughnut">Donut</option>
+    </select>
+
+    <label for="chartSelect">Thống kê: </label>
+    <select id="chartSelect" onchange="drawSelectedChart()">
+        <option value="daily">Theo ngày</option>
+        <option value="monthly">Theo tháng</option>
+        <option value="yearly">Theo năm</option>
+    </select>
+
+    <button onclick="exportToExcel()">📊 Xuất Excel</button>
+    <a href="/admin2"><button>⬅️ Trở về trang quản lý</button></a>
+</div>
+
+<div class="section">
+    <h2>Theo ngày</h2>
+    <table>
+        <thead><tr><th>Ngày</th><th>Doanh thu</th></tr></thead>
+        <tbody>
+        <tr th:each="r : ${dailyList}">
+            <td th:text="${r.date}"></td>
+            <td th:text="${r.formattedTotal}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <canvas id="chartDaily"></canvas>
+</div>
+
+<div class="section">
+    <h2>Theo tháng</h2>
+    <table>
+        <thead><tr><th>Năm</th><th>Tháng</th><th>Doanh thu</th></tr></thead>
+        <tbody>
+        <tr th:each="r : ${monthlyList}">
+            <td th:text="${r.year}"></td>
+            <td th:text="${r.month}"></td>
+            <td th:text="${r.formattedTotal}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <canvas id="chartMonthly"></canvas>
+</div>
+
+<div class="section">
+    <h2>Theo năm</h2>
+    <table>
+        <thead><tr><th>Năm</th><th>Doanh thu</th></tr></thead>
+        <tbody>
+        <tr th:each="r : ${yearlyList}">
+            <td th:text="${r.year}"></td>
+            <td th:text="${r.formattedTotal}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <canvas id="chartYearly"></canvas>
+</div>
+
+<script th:inline="javascript">
+    var labelsD = /*[[${dailyList.![date]}]]*/ [];
+    var dataD   = /*[[${dailyList.![total]}]]*/ [];
+
+    var labelsM = /*[[${monthlyList.![label]}]]*/ [];
+    var dataM   = /*[[${monthlyList.![total]}]]*/ [];
+
+    var labelsY = /*[[${yearlyList.![year]}]]*/ [];
+    var dataY   = /*[[${yearlyList.![total]}]]*/ [];
+
+    let currentCharts = [];
+
+    function getRandomColor() {
+        return `hsl(${Math.floor(Math.random() * 360)}, 70%, 70%)`;
+    }
+
+    function clearCharts() {
+        currentCharts.forEach(chart => chart.destroy());
+        currentCharts = [];
+    }
+
+    function updateChartType() {
+        drawSelectedChart();
+    }
+
+    function drawSelectedChart() {
+        clearCharts();
+
+        const chartType = document.getElementById("chartType").value;
+        const chartTarget = document.getElementById("chartSelect").value;
+
+        const chartMap = {
+            daily: { labels: labelsD, data: dataD, label: "Doanh thu theo ngày", id: "chartDaily" },
+            monthly: { labels: labelsM, data: dataM, label: "Doanh thu theo tháng", id: "chartMonthly" },
+            yearly: { labels: labelsY, data: dataY, label: "Doanh thu theo năm", id: "chartYearly" }
+        };
+
+        Object.values(chartMap).forEach(chart => {
+            document.getElementById(chart.id).style.display = 'none';
+        });
+
+        const selected = chartMap[chartTarget];
+        const canvas = document.getElementById(selected.id);
+        canvas.style.display = 'block';
+        const ctx = canvas.getContext('2d');
+
+        const datasetConfig = (chartType === 'pie' || chartType === 'doughnut') ?
+            [{
+                label: selected.label,
+                data: selected.data,
+                backgroundColor: selected.data.map(() => getRandomColor()),
+                borderColor: 'white',
+                borderWidth: 1
+            }] :
+            [{
+                label: selected.label,
+                data: selected.data,
+                fill: true,
+                borderColor: '#ff6f91',
+                backgroundColor: 'rgba(255, 111, 145, 0.2)',
+                tension: 0.4
+            }];
+
+        const chart = new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: selected.labels,
+                datasets: datasetConfig
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutBounce'
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#444',
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                scales: (chartType === 'pie' || chartType === 'doughnut') ? {} : {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#444' }
+                    },
+                    x: {
+                        ticks: { color: '#444' }
+                    }
+                }
+            }
+        });
+
+        currentCharts.push(chart);
+    }
+
+    window.onload = function() {
+        drawSelectedChart();
+    }
+
+    function exportToExcel() {
+        const chartType = document.getElementById("chartSelect").value;
+        let table;
+
+        if (chartType === "daily") {
+            table = document.querySelector("#chartDaily").closest("div").querySelector("table");
+        } else if (chartType === "monthly") {
+            table = document.querySelector("#chartMonthly").closest("div").querySelector("table");
+        } else if (chartType === "yearly") {
+            table = document.querySelector("#chartYearly").closest("div").querySelector("table");
+        }
+
+        if (!table) {
+            alert("Không tìm thấy bảng để xuất!");
+            return;
+        }
+
+        const wb = XLSX.utils.table_to_book(table, { sheet: "Doanh thu" });
+        XLSX.writeFile(wb, "ThongKeDoanhThu.xlsx");
+    }
+</script>
+</body>
+</html>

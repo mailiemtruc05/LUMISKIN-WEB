@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="master/head::head"></div>
+<style>
+    /* ---------- Bao ngoài ---------- */
+    .coupon-section {
+        background-color: #fff0f5;
+        padding: 40px 0;
+    }
+    .coupon-container {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 800px;
+        margin: auto;
+        box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
+    }
+
+    /* ---------- Tiêu đề ---------- */
+    .coupon-title {
+        text-align: center;
+        color: #d63384;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    /* ---------- Danh sách có scroll ---------- */
+    .coupon-list-wrapper {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+    .coupon-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .coupon-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f8d7da;
+    }
+    .coupon-checkbox {
+        margin-right: 15px;
+    }
+    .coupon-code {
+        flex: 1;
+        color: #333;
+        font-size: 16px;
+    }
+
+    /* nút Thêm trên mỗi dòng (nếu dùng) */
+    .coupon-form-inline {
+        margin: 0;
+    }
+    .btn-action {
+        border: none;
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn-add   { background-color: #ff69b4; color: #fff; }
+    .btn-add:hover { background-color: #e0559c; }
+
+    /* ---------- Hàng 3 nút dưới cùng ---------- */
+    .coupon-actions {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .btn-primary {
+        background-color: #ff69b4;
+        color: white;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+    .btn-update {
+        background-color: #20c997;
+        color: white;
+    }
+    .btn-primary:hover   { background-color: #e0559c; }
+    .btn-danger:hover    { background-color: #c82333; }
+    .btn-update:hover    { background-color: #1aa179; }
+</style>
+<body>
+
+<section class="coupon-section">
+    <div class="coupon-container">
+        <div class="mb-3">
+            <a href="/home" class="btn btn-outline-primary">Về trang chủ</a>
+
+        </div>
+        <!-- Form Thêm Mã -->
+        <h2 class="coupon-title">Thêm Mã Giảm Giá</h2>
+        <form th:action="@{/admin-coupons/add-new}" method="post" th:object="${coupon}" class="mb-5">
+            <div class="form-group mb-3">
+                <label for="code">Mã Coupon</label>
+                <input id="code" type="text" th:field="*{code}" class="form-control" placeholder="VD: CPN021" required/>
+            </div>
+            <div class="form-group mb-3">
+                <label for="discountAmount">Số tiền giảm (VNĐ)</label>
+                <input id="discountAmount" type="number" th:field="*{discountAmount}" class="form-control" placeholder="Nhập số tiền" required/>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn-action btn-primary">Thêm Coupon</button>
+            </div>
+        </form>
+
+        <!-- ====== Danh sách và thao tác ====== -->
+        <h2 class="coupon-title">Danh sách Mã Giảm Giá</h2>
+        <form th:action="@{/admin-coupons}" method="post">
+            <div class="coupon-list-wrapper mb-3">
+                <ul class="coupon-list">
+                    <li th:each="c : ${coupons}" class="coupon-item">
+                        <input type="checkbox"
+                               name="selectedCodes"
+                               th:value="${c.code}"
+                               class="coupon-checkbox"/>
+                        <span class="coupon-code"
+                              th:text="|${c.code} - ${#numbers.formatDecimal(c.discountAmount,0,'COMMA',0,'POINT')} đ|"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Ngày hết hạn cho user -->
+            <div class="form-group mb-3">
+                <label for="scheduledTime">Thiết lập hạn thời gian</label>
+                <input id="scheduledTime"
+                       type="datetime-local"
+                       name="scheduledTime"
+                       class="form-control"
+                       required/>
+            </div>
+
+            <!-- Nút Xóa và Cập nhật -->
+            <div class="coupon-actions">
+                <button type="submit"
+                        name="_action" value="delete"
+                        class="btn-action btn-danger"
+                        formnovalidate>
+                    Xóa
+                </button>
+                <button type="submit"
+                        name="_action" value="schedule"
+                        class="btn-action btn-update">
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Thư viện JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+.main-offset {
+    margin-top: 150px;  /* điều chỉnh theo chiều cao header + logo của bạn */
+}
+/* ============================
+   GHI ĐÈ BIẾN CHỦ ĐẠO CỦA BOOTSTRAP
+   ============================ */
+/* Đổi màu text-primary sang hồng */
+/* Màu chủ đạo mới: hồng từ logo (#ff0099) */
+
+.text-primary {
+    color: #ff0099 !important;
+}
+
+.btn-outline-primary {
+    color: #ff0099 !important;
+    border-color: #ff0099 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #ff0099 !important;
+    color: #fff !important;
+}
+
+.card-title {
+    color: #ff0099 !important;
+}
+
+.card-header h2 {
+    color: #ff0099 !important;
+}

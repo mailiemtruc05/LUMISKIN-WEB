@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý sản phẩm - LUMISKIN</title>
+
+  <!-- Favicon -->
+  <link href="/img/favicon.png" rel="icon">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      background-color: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      margin: 0 auto;
+    }
+
+
+    .card {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      padding: 40px 30px;
+      margin-bottom: 50px;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background-color: #00b894;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #019875;
+    }
+
+    .table-container {
+      width: 95.5%;
+      background-color: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      margin: 0 auto;
+    }
+
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: #f7f7f7;
+      color: #444;
+    }
+
+    td .description-box {
+      max-height: 100px;
+      overflow-y: auto;
+      white-space: pre-line;
+      text-align: left;
+    }
+
+    td img {
+      max-height: 100px;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .actions button {
+      background-color: #ff6b6b;
+      color: white;
+      padding: 6px 12px;
+      margin: 2px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .actions button:hover {
+      background-color: #e74c3c;
+    }
+
+    .actions button.edit {
+      background-color: #3498db;
+    }
+
+    .actions button.edit:hover {
+      background-color: #2980b9;
+    }
+
+    #confirmModal button {
+      padding: 8px 16px;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .table-container h3 {
+      text-align: center;
+    }
+
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background-color: #ff9ac8;
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-back-home:hover {
+      background-color: #ff7daf;
+      text-decoration: none;
+    }
+    .btn-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end; /* đẩy sang phải */
+      margin-bottom: 15px;
+    }
+
+    .custom-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      height: 40px;
+      min-width: 80px;
+    }
+
+    .custom-btn i {
+      margin-right: 6px;
+      font-size: 16px;
+    }
+
+    /* Nút Revenue - xanh lá */
+    .btn-revenue {
+      color: #0c7734;
+      border: 2px solid #0c7734;
+      background-color: transparent;
+    }
+    .btn-revenue:hover {
+      background-color: #0c7734;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Nút Backup - xanh dương */
+    .btn-backup {
+      color: #007bff;
+      border: 2px solid #007bff;
+      background-color: transparent;
+    }
+    .btn-backup:hover {
+      background-color: #007bff;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Nút Liên hệ khách hàng */
+    .custom-contact-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;               /* đẩy ra bên trái so với nút Backup */
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      font-weight: 500;
+      border-radius: 16px;
+      font-size: 15px;
+      border: 2px solid #20c997;  /* màu xanh lá mát mắt */
+      color: #20c997;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .custom-contact-btn:hover {
+      background-color: #20c997;
+      color: white;
+      text-decoration: none;
+    }
+
+    .custom-contact-btn i {
+      font-size: 16px;
+    }
+
+  /*!*nút mã giảm giá *!*/
+  /*  #btn-coupons{*/
+  /*    border: 2px solid red;*/
+  /*    color: #dc3545;*/
+  /*  }*/
+  /*  #btn-coupon:hover {*/
+  /*     background-color: #dc3545;*/
+  /*     color: white;*/
+  /*     transform: scale(1.05);*/
+  /*   }*/
+    .btn-coupon {
+      color: #dc3545;
+      border: 2px solid #dc3545;
+      background-color: transparent;
+    }
+    .btn-coupon i {
+      margin-right: 6px;
+      font-size: 16px;
+      color: #dc3545;       /* đỏ khi bình thường */
+      transition: color 0.3s;
+    }
+    .btn-coupon:hover {
+      background-color: #dc3545;
+      color: white;
+      transform: scale(1.05);
+    }
+    .btn-coupon:hover i {
+      color: white;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+
+  <div class="card">
+    <div class="home-button-wrapper">
+      <a href="/home" class="btn-back-home">
+        <i class="bi bi-house-door-fill"></i> Trang chủ
+      </a>
+    </div>
+    <h2>Quản Lý Sản Phẩm</h2>
+    <form id="productForm">
+      <div class="form-group">
+        <label for="name">Tên sản phẩm</label>
+        <input type="text" id="name" name="name" placeholder="VD: Sữa rửa mặt LUMISKIN" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Giá sản phẩm</label>
+        <input type="number" id="price" name="price" placeholder="VD: 199000" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Mô tả sản phẩm</label>
+        <textarea id="description" name="description" placeholder="Nhập mô tả chi tiết..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="image">Đường dẫn hình ảnh</label>
+        <input type="text" id="image" name="image" placeholder="VD: https://...jpg">
+      </div>
+      <div id="imagePreviewContainer" style="display:none; position:absolute; z-index:1000;">
+        <img id="imagePreview" src="" alt="Preview" style="max-width:200px; max-height:200px; border:1px solid #ccc; background:#fff;">
+      </div>
+
+      <div class="form-group">
+        <label for="category">Chọn danh mục</label>
+        <select id="category" name="category">
+          <option value=""></option>
+          <option value="1">Chăm sóc da mặt</option>
+          <option value="2">Nâng niu làn da</option>
+          <option value="3">Sản phẩm khác</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="subCategory">Chọn danh mục con</label>
+        <select id="subCategory" name="subCategory">
+          <option value="">-- Chọn danh mục chính trước --</option>
+        </select>
+      </div>
+      <button type="submit">Thêm sản phẩm</button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <div style="position: relative; text-align: center; margin-bottom: 20px;">
+      <h2>Danh sách sản phẩm</h2>
+      <div class="btn-actions">
+        <a href="/admin/revenue" class="btn custom-btn btn-revenue">
+          <i class="bi bi-bar-chart-line"></i>
+          <span>Revenue</span>
+        </a>
+        <a href="/backup" class="btn custom-btn btn-backup">
+          <i class="bi bi-cloud-arrow-down"></i>
+          <span>Backup</span>
+        </a>
+        <!-- Nút Liên hệ khách hàng custom -->
+        <a th:href="@{/contact/chitiet}" class="custom-contact-btn">
+          <i class="bi bi-chat-left-text-fill"></i>
+          Liên hệ khách hàng
+        </a>
+        <a  href="/admin-coupons"  class="btn custom-btn btn-coupon">
+          <i class="bi bi-tag-fill"></i>
+          <span>Mã giảm giá</span>
+        </a>
+      </div>
+
+    </div>
+
+
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên sản phẩm</th>
+        <th>Giá</th>
+        <th>Mô tả</th>
+        <th>Hình ảnh</th>
+        <th>Hành động</th>
+      </tr>
+      </thead>
+      <tbody id="productList">
+      <div id="confirmModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); align-items: center; justify-content: center; z-index: 999;">
+        <div style="background: white; padding: 30px; border-radius: 12px; max-width: 400px; text-align: center;">
+          <p style="font-size: 18px; margin-bottom: 20px;">Bạn có chắc muốn xóa sản phẩm này không?</p>
+          <button id="confirmDeleteBtn" style="background-color: #dc3545; margin-right: 10px;">Xác nhận</button>
+          <button onclick="closeConfirm()" style="background-color: #6c757d;">Hủy</button>
+        </div>
+      </div>
+      <!-- Sản phẩm sẽ được render tại đây -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  const categorySelect = document.getElementById("category");
+  const subCategorySelect = document.getElementById("subCategory");
+
+  const subCategories = {
+    1: [ // Skincare
+      { id: 1, name: "Sữa rửa mặt" },
+      { id: 2, name: "Serum" },
+      { id: 3, name: "Kem dưỡng ẩm" },
+      { id: 4, name: "Kem chống nắng" }
+    ],
+    2: [ // Makeup
+      { id: 5, name: "Sữa tắm dưỡng ẩm" },
+      { id: 6, name: "Tẩy tế bào chết body" },
+      { id: 7, name: "Tinh dầu thư giãn" },
+      { id: 8, name: "Dưỡng thể trắng da" }
+    ],
+    3: [ // Bodycare
+      { id: 9, name: "Mặt nạ" },
+      { id: 10, name: "Tẩy trang" },
+      { id: 11, name: "Dụng cụ chăm sóc da" },
+      { id: 12, name: "Thực phẩm chức năng" }
+    ]
+  };
+
+  categorySelect.addEventListener("change", function () {
+    const selected = this.value;
+    const options = subCategories[selected] || [];
+
+    // Clear previous options
+    subCategorySelect.innerHTML = "";
+
+    if (options.length === 0) {
+      subCategorySelect.innerHTML = '<option value="">-- Không có danh mục con --</option>';
+      return;
+    }
+
+    subCategorySelect.innerHTML = '<option value="">-- Chọn danh mục con --</option>';
+    options.forEach(sub => {
+      const option = document.createElement("option");
+      option.value = sub.id; // Gán ID làm value
+      option.textContent = sub.name;
+      subCategorySelect.appendChild(option);
+    });
+  });
+  document.getElementById("productForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Ngăn chặn reload trang
+
+    const productData = {
+      productName: document.getElementById("name").value ,
+      image: document.getElementById("image").value,
+      price: document.getElementById("price").value,
+      description: document.getElementById("description").value,
+      cid:{
+        id:document.getElementById("category").value
+      }
+      ,
+      subCategory:{
+        id:document.getElementById("subCategory").value
+      }
+    };
+
+    fetch("http://localhost:8096/api/product", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(productData)
+    })
+            .then(response => response.text())
+            .then(data => {
+              if (data.includes("Thêm thành công!")) {
+                alert("Thêm sản phẩm thành công");
+                loadProducts();
+              }
+              else {
+                alert("Lỗi khi thêm sản phẩm.");
+
+              }
+
+            })
+            .catch(error => console.error("Lỗi:", error));
+  });
+
+  function loadProducts() {
+    fetch("http://localhost:8096/api/product/products")
+            .then(response => response.json())
+            .then(data => {
+              const productList = document.getElementById("productList");
+              productList.innerHTML = ""; // Clear existing rows
+
+              data.forEach(product => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+  <td>${product.id}</td>
+  <td>${product.productName}</td>
+  <td>${product.price}</td>
+  <td><div class="description-box">${product.description}</div></td>
+  <td><img src="${product.image}" alt="Hình ảnh" style="max-width: 100px; border-radius: 8px;"></td>
+
+  <td>
+
+    <button onclick="deleteProduct(${product.id})">Xóa</button>
+  </td>
+`;
+
+                productList.appendChild(row);
+              });
+            })
+            .catch(error => console.error("Lỗi khi tải sản phẩm:", error));
+  }
+
+
+
+  window.addEventListener("DOMContentLoaded", function () {
+    loadProducts(); // 👉 Gọi hàm load sản phẩm khi trang vừa load xong
+  });
+
+
+
+
+
+
+
+  // Modal xác nhận xoá
+  let productIdToDelete = null;
+
+  function deleteProduct(id) {
+    productIdToDelete = id;
+    document.getElementById("confirmModal").style.display = "flex";
+  }
+
+  document.getElementById("confirmDeleteBtn").addEventListener("click", function () {
+    if (productIdToDelete) {
+      fetch(`http://localhost:8096/api/product/${productIdToDelete}`, {
+        method: "DELETE"
+      })
+              .then(res => {
+                alert("Đã xóa sản phẩm!");
+                closeConfirm();
+                loadProducts();
+              })
+              .catch(err => {
+                alert("Lỗi khi xóa!");
+                closeConfirm();
+              });
+    }
+  });
+
+  function closeConfirm() {
+    document.getElementById("confirmModal").style.display = "none";
+    productIdToDelete = null;
+  }
+
+
+  const imageInput = document.getElementById("image");
+  const previewContainer = document.getElementById("imagePreviewContainer");
+  const previewImage = document.getElementById("imagePreview");
+
+  previewImage.onerror = function () {
+    this.src = "img/Not_Found_Img.jpg";
+  };
+
+  imageInput.addEventListener("mouseenter", showPreview);
+  imageInput.addEventListener("mousemove", movePreview);
+  imageInput.addEventListener("mouseleave", hidePreview);
+
+  function showPreview(e) {
+    const imageUrl = imageInput.value.trim();
+    if (imageUrl) {
+      previewImage.src = imageUrl;
+      previewContainer.style.display = "block";
+      movePreview(e);
+    }
+  }
+
+  function movePreview(e) {
+    previewContainer.style.top = (e.pageY + 10) + "px";
+    previewContainer.style.left = (e.pageX + 10) + "px";
+  }
+
+  function hidePreview() {
+    previewContainer.style.display = "none";
+  }
+
+
+</script>
+</body>
+</html>

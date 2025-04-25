@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="master/head::head"></div>
+<style>
+    /* Coupon Section Styles */
+    .coupon-section {
+        background-color: #fff0f5;
+        padding: 40px 0;
+    }
+
+    .coupon-container {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 700px;
+        margin: 0 auto;
+        box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
+    }
+
+    .coupon-title {
+        text-align: center;
+        color: #d63384;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .coupon-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .coupon-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f8d7da;
+    }
+
+    .coupon-code {
+        color: #333;
+        font-size: 16px;
+    }
+
+    .coupon-form {
+        margin: 0;
+    }
+
+    .coupon-button {
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .coupon-button:hover {
+        background-color: #e0559c;
+    }
+
+    .coupon-back {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .coupon-back a {
+        color: #d63384;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    /* Khung chứa danh sách coupon, giới hạn chiều cao và bật cuộn */
+    .coupon-list-wrapper {
+        max-height: 400px; /* khoảng 10 mục, bạn có thể điều chỉnh */
+        overflow-y: auto;
+        padding-right: 5px; /* tránh đè scrollbar vào nội dung */
+    }
+
+    /* Thêm thanh cuộn mượt mà */
+    .coupon-list-wrapper::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .coupon-list-wrapper::-webkit-scrollbar-thumb {
+        background-color: #ff69b4;
+        border-radius: 3px;
+    }
+
+    .coupon-list-wrapper::-webkit-scrollbar-track {
+        background-color: #ffe4ec;
+    }
+</style>
+<body>
+<div th:replace="master/layout-spinner::spinner"></div>
+<div th:replace="master/layout-navbar::navbar"></div>
+<div th:replace="master/layout-carousel::carousel"></div>
+
+<section class="coupon-section">
+    <div class="coupon-back">
+        <a th:href="@{/shopping-cart}">Quay về giỏ hàng</a>
+    </div>
+    <div class="coupon-container ">
+        <h2 class="coupon-title">Chọn Mã Giảm Giá</h2>
+        <ul class="coupon-list coupon-list-wrapper">
+            <!-- th:each lặp qua biến 'coupons' được controller truyền vào Model -->
+            <li class="coupon-item" th:each="c : ${coupons}">
+                <!-- Hiển thị mã và giá tiền  -->
+                <span class="coupon-code" th:text="|${c.code} - ${#numbers.formatDecimal(c.discountAmount,0,'COMMA',0,'POINT')} đ|"></span>
+                <form th:action="@{/coupons/add}" method="post" class="coupon-form">
+                    <input type="hidden" name="code" th:value="${c.code}"/>
+                    <button type="submit" class="coupon-button" th:disabled="${cartTotal < (c.discountAmount.intValue() * 10)}" th:title="${cartTotal < (c.discountAmount.intValue() * 10)
+                         ? 'Đơn phải ≥ '
+                           + #numbers.formatDecimal(c.discountAmount.intValue() * 10,0,'COMMA',0,'POINT')
+                           + ' đ để áp dụng mã'
+                         : ''}">
+                        Thêm mã
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<div th:replace="master/layout-footer::footer"></div>
+<!-- Thư viện JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>

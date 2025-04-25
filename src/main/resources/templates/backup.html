@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Backup Database</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 25px;
+            color: #fff;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+
+        p {
+            margin-bottom: 30px;
+            background-color: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #f1f1f1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            padding: 14px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #00c6ff, #0072ff);
+            color: white;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        a.delete-btn {
+            background: linear-gradient(145deg, #ff416c, #ff4b2b);
+        }
+
+        a i {
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+        a.back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        a.back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔐 Backup Database</h1>
+
+    <p th:text="${message}">Kết quả backup sẽ hiển thị ở đây</p>
+
+    <ul>
+        <li><a href="/backup/full"><i class="fas fa-database"></i> Thực hiện Full Backup</a></li>
+        <li><a href="/backup/differential"><i class="fas fa-clone"></i> Differential Backup</a></li>
+        <li><a href="/backup/transaction"><i class="fas fa-exchange-alt"></i> Transaction Log Backup</a></li>
+        <li><a href="/backup/delete-full" class="delete-btn"><i class="fas fa-trash-alt"></i> Xoá tất cả Full Backup</a></li>
+        <li><a href="/admin2" class="back-btn"><i class="fas fa-arrow-left"></i> Trở về trang quản lý</a></li>
+    </ul>
+</div>
+</body>
+</html>

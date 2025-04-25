@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cảm ơn vì đã đặt hàng</title>
+    <link rel="icon" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #fff0f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* giữ ở trên thay vì chính giữa toàn màn hình */
+            min-height: 100vh;
+        }
+
+        .thankyou-container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px 15px;
+            margin: 20px 10px;
+            max-width: 1200px; /* tăng nhẹ chiều ngang */
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Icon, title, subtitle giữ nguyên */
+        .icon-success {
+            font-size: 3.5rem;
+            color: #d63384;
+            margin-bottom: 15px;
+        }
+
+        .main-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d63384;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Thông tin khách hàng */
+        h4 {
+            color: #c2185b;
+            font-size: 1.1rem;
+            margin-top: 25px;
+        }
+
+        .info-group p {
+            margin: 4px 0;
+            font-size: 0.95rem;
+        }
+
+        /* Bảng chi tiết đơn hàng */
+        .order-details {
+            max-height: 250px; /* giới hạn chiều cao */
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+        }
+
+        .table {
+            width: 100%;
+            table-layout: auto;
+            word-break: break-word;
+        }
+
+        .table th,
+        .table td {
+            font-size: 0.9rem;
+        }
+
+        /* Danh sách hoặc các item riêng */
+        .list-group-item {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Nút */
+        .btn-pink {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="thankyou-container">
+
+    <!-- Icon -->
+    <div>
+        <i class="bi bi-patch-check-fill icon-success"></i>
+    </div>
+
+    <!-- Tiêu đề -->
+    <div>
+        <h1 class="main-title">Cảm ơn bạn đã đặt hàng!</h1>
+        <p class="subtitle">LUMISKIN rất trân trọng sự ủng hộ của bạn.</p>
+    </div>
+
+    <!-- Thông tin khách hàng -->
+    <div class="info-group text-start mt-4">
+        <h4>Thông tin khách hàng</h4>
+        <p><strong>Họ tên:</strong> <span th:text="${order.tenKhachHang}"></span></p>
+        <p><strong>Ngày sinh:</strong> <span th:text="${order.ngaySinh}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${order.soDienThoai}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${order.email}"></span></p>
+        <p><strong>Địa chỉ:</strong> <span th:text="${order.diaChi}"></span></p>
+        <p><strong>Phương thức thanh toán:</strong> <span th:text="${order.pttt}"></span></p>
+    </div>
+
+    <!-- Chi tiết đơn hàng -->
+    <div class="text-start mt-4">
+        <h4>Chi tiết đơn hàng</h4>
+        <div class="card mt-3 shadow-sm" style="max-height: 300px; overflow-y: auto;">
+            <div class="card-body p-0">
+                <table class="table mb-0 table-hover">
+                    <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${orderDetails}">
+                        <td th:text="${item.tenSanPham}"></td>
+                        <td th:text="${item.soLuong}"></td>
+                        <td th:text="${#numbers.formatInteger(item.donGia, 0, 'POINT')} + ' ₫'"></td>
+                        <td th:text="${#numbers.formatInteger(item.thanhTien, 0, 'POINT')} + ' ₫'"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tổng cộng -->
+    <h4 class="mt-4">Tổng cộng</h4>
+    <ul class="list-group mb-4">
+        <li class="list-group-item d-flex justify-content-between text-success">
+            <span>Mã giảm giá:</span>
+            <strong th:text="${couponCode != null ? couponCode : '–'}">–</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Số tiền giảm:</span>
+            <strong th:text="${discount != null ? #numbers.formatDecimal(discount,0,'COMMA',0,'POINT') + ' Đ' : '0 Đ'}">0 Đ</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Tổng thành tiền:</span>
+            <strong th:text="${discountedTotal != null ? #numbers.formatDecimal(discountedTotal,0,'COMMA',0,'POINT') + ' Đ' : #numbers.formatDecimal(total,0,'COMMA',0,'POINT') + ' Đ'}">0 Đ</strong>
+        </li>
+    </ul>
+
+    <!-- Nút quay về -->
+    <a href="/" class="btn btn-pink">
+        <i class="bi bi-house-door-fill me-2"></i>Trở về trang chủ
+    </a>
+
+</div>
+
+</body>
+</html>

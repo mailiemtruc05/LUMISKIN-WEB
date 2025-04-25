@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="master/head::head"></div>
+
+<body>
+    <!-- Spinner Start -->
+    <div th:replace="master/layout-spinner::spinner"></div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <div th:replace="master/layout-navbar::navbar"></div>
+    <!-- Navbar End -->
+    <!-- header -->
+
+
+    <!-- Carousel Start -->
+    <div th:replace="master/layout-carousel::carousel"></div>
+    <!-- Carousel End -->
+
+
+    <!-- About Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="about-img position-relative overflow-hidden  pe-0">
+                        <img class="img-fluid w-100" th:src="@{img/layout5.jpg}">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <h1 class="display-5 mb-4">Chu trình dưỡng da hằng ngày của Lumiskin dành cho các nàng</h1>
+                    <p class="mb-4">Ban ngày</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Dùng sữa rửa mặt</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Toner/ Nước hoa hồng</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Serum cấp ẩm</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Kem chống nắng</p>
+                    <p class="mb-4">Ban đêm</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Tẩy trang</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Sữa rửa mặt</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Toner/ Nước hoa hồng</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Serum cấp ẩm</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Kem mắt</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Kem dưỡng ẩm</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Son dưỡng ban đêm</p>
+                    <a class="btn btn-pink rounded-pill py-3 px-5 mt-3" href="https://vi.wikipedia.org/wiki/Ch%C4%83m_s%C3%B3c_da" target="_blank">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Firm Visit Start -->
+    <div class="container-fluid bg-primary bg-icon mt-5 py-6">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-7 wow fadeIn" data-wow-delay="0.1s">
+                    <h1 class="display-5 text-white mb-3">Về Lumiskin</h1>
+                    
+                    <marquee class="text-white mb-0">Take care and love your skin every customer who comes to Lumiskin is a god. Come to Lumiskin, you get quality and genuine products.</marquee>
+                    <p class="text-white mb-0">Lumiskin thành lập vào ngày 1/1/2025, được thành lập bởi một nhóm bạn trẻ với sở thích với mỹ phẩm. Hiện nay, Lumiskin đã nhận được sự tin tưởng và yêu mến từ rất nhiều khách hàng </p>
+                </div>
+                <div class="col-md-5 text-md-end wow fadeIn" data-wow-delay="0.5s">
+                    <a class="btn btn-lg btn-secondary rounded-pill py-3 px-5" href="/home">Visit Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Firm Visit End -->
+
+
+    <!-- Blog Start -->
+    <div th:replace="master/layout-blog::blog"></div>
+      <!-- Blog End -->
+  
+
+     <!-- Footer Start -->
+    <div th:replace="master/layout-footer::footer"></div>
+  <!-- Footer End -->
+
+  <!-- Back to Top -->
+  <a
+    href="#"
+    class="btn btn-lg btn-pink btn-lg-square rounded-circle back-to-top"
+    ><i class="bi bi-arrow-up"></i
+  ></a>
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/lib/wow/wow.min.js}"></script>
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+
+    <!-- Template Javascript -->
+    <script th:src="@{js/main.js}"></script>
+</body>
+
+</html>

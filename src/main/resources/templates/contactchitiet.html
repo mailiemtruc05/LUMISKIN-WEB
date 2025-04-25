@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="master/head :: head"></head>
+<link rel="stylesheet" th:href="@{/css/contact.css}">
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Navbar -->
+<div th:replace="master/layout-navbar :: navbar"></div>
+
+<!-- Main Content -->
+<main class="flex-fill" style="margin-top: 150px;">
+  <div class="container">
+    <!-- Card bao quanh toàn bộ danh sách liên hệ -->
+    <div class="card shadow-sm rounded">
+      <div class="card-header bg-white">
+        <h2 class="mb-0 text-center">Chi tiết liên hệ từ khách hàng</h2>
+      </div>
+      <div class="card-body p-0">
+        <!-- Khung scroll với max-height -->
+        <div style="max-height: 500px; overflow-y: auto; padding: 1rem;">
+          <div id="contactList" class="row g-4">
+            <!-- Dữ liệu liên hệ sẽ được đổ vào đây -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="master/layout-footer :: footer"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/api/contact/chitiet")
+            .then(res => res.json())
+            .then(data => {
+              const list = document.getElementById("contactList");
+              if (data.length === 0) {
+                list.innerHTML = "<p class='text-center'>Chưa có liên hệ nào.</p>";
+                return;
+              }
+              data.forEach((c, i) => {
+                const col = document.createElement("div");
+                col.className = "col-md-6";
+
+                col.innerHTML = `
+                  <div class="card border rounded p-3 shadow-sm h-100">
+                    <h5 class="card-title text-primary">${c.tenKhachHang}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${c.email}</h6>
+                    <p><strong>Sản phẩm:</strong> ${c.tenSanPham}</p>
+                    <button class="btn btn-sm btn-outline-primary toggle-btn mb-2">
+                      Xem nội dung
+                    </button>
+                    <p class="content d-none">${c.noiDung}</p>
+                  </div>
+                `;
+                list.appendChild(col);
+              });
+
+              // Gắn sự kiện ẩn/hiện nội dung
+              document.querySelectorAll(".toggle-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                  const p = btn.nextElementSibling;
+                  p.classList.toggle("d-none");
+                  btn.textContent = p.classList.contains("d-none")
+                          ? "Xem nội dung"
+                          : "Ẩn nội dung";
+                });
+              });
+            })
+            .catch(err => console.error("Lỗi khi lấy dữ liệu:", err));
+  });
+</script>
+
+</body>
+</html>

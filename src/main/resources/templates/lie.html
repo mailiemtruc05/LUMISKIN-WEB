@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="master/head::head"></div>
+
+<body>
+   
+   <!-- Spinner Start -->
+    <!--show: Mặc định hiển thị.
+bg-white: Nền màu trắng.
+position-fixed: Cố định trên màn hình.
+w-100 vh-100: Chiếm toàn bộ chiều rộng (w-100) và chiều cao (vh-100) của màn hình.
+top-50 start-50 translate-middle: Căn giữa màn hình.
+d-flex align-items-center justify-content-center: Sử dụng Flexbox để căn giữa.
+-->
+   <div th:replace="master/layout-spinner::spinner"></div>
+ <!-- Spinner End -->
+
+ <!-- Navbar Start -->
+  <!-- Top bar điều hướng trên cùng. ontainer-fluid: Tạo một container kéo dài toàn bộ chiều rộng trang.
+fixed-top: Cố định thanh này ở đầu trang khi cuộn xuống.
+px-0: Xóa padding trái/phải.
+wow fadeIn + data-wow-delay="0.1s": Dùng WOW.js để tạo hiệu ứng mờ dần khi xuất hiện.-->
+
+   <div th:replace="master/layout-navbar::navbar"></div>
+ 
+ <!-- Navbar End -->
+  <!--bố cục tổng quát-->   
+ <div class="container-xxl py-5">
+  <div class="container">
+      <div class="row g-5 align-items-center lie">
+        <!--hình ảnh minh họa-->
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+           
+              <div class="about-img position-relative overflow-hidden  pe-0">
+                  <img class="img-fluid w-100" src="img/l2.jpg">
+              </div>
+          </div>
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+              <h1 class="display-5 mb-4">Chính sách đổi trả của LUMISKIN</h1>
+              <p  style="font-weight: bolder;">1. Điều kiện đổi trả</p>
+              <p class="mb-4">Quý Khách hàng cần kiểm tra tình trạng hàng hóa và có thể đổi hàng/ trả lại hàng ngay tại thời điểm giao/nhận hàng trong những trường hợp sau:</p>
+              <p><i class="fa fa-check text-primary me-3"></i>Hàng không đúng chủng loại, mẫu mã trong đơn hàng đã đặt hoặc như trên website tại thời điểm đặt hàng.</p>
+              <p><i class="fa fa-check text-primary me-3"></i>Không đủ số lượng, không đủ bộ như trong đơn hàng.</p>
+              <p><i class="fa fa-check text-primary me-3"></i>Hàng bị hư hỏng do vận chuyển hoặc hết hạn sử dụng.</p>
+              <p class="mb-4">Khách hàng có trách nhiệm trình giấy tờ liên quan chứng minh sự thiếu sót trên để hoàn thành việc hoàn trả/đổi trả hàng hóa. </p>
+              <p class="mb-4">Khách hàng phải quay video khui hàng.</p>
+              <p class="mb-4">Chúng tôi sẽ không chịu trách nhiệm nếu quý khách không kiểm tra tình trạng hàng hóa ngay tại thời điểm giao nhận.</p>
+
+              <p style="font-weight: bolder;">2. Quy định về thời gian thông báo và gửi sản phẩm đổi trả</p>
+              <p><i class="fa fa-check text-primary me-3"></i><strong>Thời gian thông báo đổi trả:</strong> trong vòng 48h kể từ khi nhận sản phẩm</p>
+              <p><i class="fa fa-check text-primary me-3"></i><strong>Thời gian gửi chuyển trả sản phẩm:</strong> trong vòng 3 ngày kể từ khi nhận sản phẩm.</p>
+              <p><i class="fa fa-check text-primary me-3"></i><strong>Tình trạng hàng đổi trả:</strong> Sản phẩm chưa qua sử dụng, còn nguyên bao bì đóng gói, đầy đủ phụ kiện, tem cùng quà tặng kèm. Bao bì sản phẩm không bị dơ, bễ, vỡ, có mùi lạ hoặc có dấu hiệu bảo quản không đúng với hướng dẫn sử dụng.</p>
+              <p><i class="fa fa-check text-primary me-3"></i><strong>Địa điểm đổi trả sản phẩm:</strong> Khách hàng có thể mang hàng trực tiếp đến văn phòng/ cửa hàng của chúng tôi hoặc chuyển qua đường bưu điện.</p>
+              <p class="mb-4">Trong trường hợp Quý Khách hàng có ý kiến đóng góp/khiếu nại liên quan đến chất lượng sản phẩm. Quý Khách hàng vui lòng liên hệ đường dây chăm sóc khách hàng  vào mục <a href="contact">Liên hệ chúng tôi</a> để nhắn tin cho shop.</p>
+              
+          </div>
+      </div>
+  </div>
+</div>
+ <!-- header -->
+
+
+ <!--Container chính của Footer container-fluid bg-dark footer:
+container-fluid: Chiếm toàn bộ chiều rộng màn hình.
+bg-dark: Nền màu tối (đen/xám đậm).
+Khoảng cách (mt-5 pt-5 py-5):
+mt-5: Thêm margin-top để tách footer khỏi nội dung trên.
+pt-5 py-5: Tạo padding trên và dưới, giúp bố cục thoáng hơn.
+Hiệu ứng xuất hiện (wow fadeIn):
+Làm footer mờ dần hiện lên khi tải trang.-->
+   <!-- Footer Start -->
+   <div th:replace="master/layout-footer::footer"></div>
+ <!-- Footer End -->
+
+ <!-- Back to Top Nút này giúp người dùng quay lại đầu trang khi nhấn vào.
+href="#": Điều hướng lên đầu trang.
+btn btn-lg btn-pink: Tạo nút lớn với màu hồng.
+btn-lg-square rounded-circle: Làm cho nút có dạng hình tròn.
+back-to-top: Class này có thể liên kết với JavaScript để thêm hiệu ứng.
+-->
+ <a
+   href="#"
+   class="btn btn-lg btn-pink btn-lg-square rounded-circle back-to-top"
+   ><i class="bi bi-arrow-up"></i
+ ></a>
+<!--thư viện -->
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
+</body>
+
+</html>

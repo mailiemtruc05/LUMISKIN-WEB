@@ -1,0 +1,176 @@
+
+<div th:fragment="product" class="layout-product container-xxl py-5">
+    <div class="container">
+        <!-- Tiêu đề trang Sản Phẩm -->
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-6">
+                <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="display-5 mb-3">Sản Phẩm</h1>
+                </div>
+            </div>
+            <div class="col-lg-6 text-start text-lg-end wow" data-wow-delay="0.1s">
+                <!--
+                    Chỉ hiển thị các tab danh mục khi KHÔNG tìm kiếm (isSearch == false).
+                    Giữ nguyên logic gốc:
+                    (A) Nếu KHÔNG lọc => hiển thị tất cả tab
+                    (B) Nếu ĐANG lọc => hiển thị 1 tab
+                -->
+                <ul class="nav nav-pills d-inline-flex justify-content-center mb-5" th:if="${isSearch == false}">
+                    <!-- (A) Nếu KHÔNG lọc => hiển thị tất cả tab -->
+                    <li th:if="${selectedCatId == null and selectedSubId == null}"
+                        th:each="category, stat : ${categories}"
+                        class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2"
+                           data-bs-toggle="pill"
+                           th:href="${'#tab-' + category.id}"
+                           th:classappend="${stat.index == 0} ? ' active' : ''"
+                           th:text="${category.cname}">
+                        </a>
+                    </li>
+                    <!-- (B) Nếu ĐANG lọc => chỉ hiển thị 1 tab (activeCategory) -->
+                    <li th:if="${selectedCatId != null or selectedSubId != null}"
+                        class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2 active"
+                           data-bs-toggle="pill"
+                           th:href="${'#tab-' + (activeCategory != null ? activeCategory.id : 0)}"
+                           th:text="${activeCategory != null ? activeCategory.cname : 'Danh mục'}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--
+            PHẦN 1: Khi đang tìm kiếm (isSearch == true), hiển thị kết quả tìm kiếm
+        -->
+        <div th:if="${isSearch}">
+            <div class="row g-4">
+                <!-- Nếu không có kết quả -->
+                <div th:if="${#lists.isEmpty(searchResults)}">
+                    <p>Không tìm thấy sản phẩm.</p>
+                </div>
+                <!-- Nếu có kết quả -->
+                <div th:each="product : ${searchResults}" class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="product-item">
+                        <div class="position-relative bg-light overflow-hidden">
+                            <img class="img-fluid w-100" th:src="${product.image}" alt="">
+                        </div>
+                        <div class="text-center p-4">
+                            <a class="d-block h5 mb-2 text-limit"
+                               th:href="@{'/product-details/' + ${product.id}}"
+                               th:text="${product.productName}">Tên sản phẩm</a>
+                            <span class="text-primary me-1"
+                                  th:text="${#numbers.formatDecimal(product.price, 1, 'POINT', 0, 'COMMA')} + ' VNĐ'">
+                                    Giá
+                                </span>
+                        </div>
+                        <div class="d-flex border-top">
+                            <small class="w-50 text-center border-end py-2">
+                                <a class="text-body" th:href="@{'/product-details/' + ${product.id}}">
+                                    <i class="fa fa-eye text-primary me-2"></i>View detail
+                                </a>
+                            </small>
+                            <small class="w-50 text-center py-2">
+                                <a href="#"
+                                   class="btn-add-to-cart text-body"
+                                   th:attr="data-id=${product.id}">
+                                    <i class="fa fa-shopping-bag text-primary me-2"></i>Add to cart
+                                </a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+            PHẦN 2: Khi KHÔNG tìm kiếm (isSearch == false), hiển thị sản phẩm theo danh mục
+        -->
+        <div class="tab-content" th:if="${isSearch == false}">
+            <!-- (A) Nếu KHÔNG lọc => hiển thị nhiều tab (mỗi category 1 tab) -->
+            <div th:if="${selectedCatId == null and selectedSubId == null}"
+                 th:each="category, stat : ${categories}"
+                 th:id="${'tab-' + category.id}"
+                 class="tab-pane fade show p-0"
+                 th:classappend="${stat.index == 0} ? ' active' : ''">
+                <div class="row g-4">
+                    <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
+                         data-wow-delay="0.1s"
+                         th:each="product : ${productsByCategory[category.id]}">
+                        <div class="product-item">
+                            <div class="position-relative bg-light overflow-hidden">
+                                <img class="img-fluid w-100" th:src="${product.image}" alt="">
+                            </div>
+                            <div class="text-center p-4">
+                                <a class="d-block h5 mb-2 text-limit"
+                                   th:href="@{'/product-details/' + ${product.id}}"
+                                   th:text="${product.productName}">Tên sản phẩm</a>
+                                <span class="text-primary me-1"
+                                      th:text="${#numbers.formatDecimal(product.price, 1, 'POINT', 0, 'COMMA')} + ' VNĐ'">
+                                        Giá
+                                    </span>
+                            </div>
+                            <div class="d-flex border-top">
+                                <small class="w-50 text-center border-end py-2">
+                                    <a class="text-body" th:href="@{'/product-details/' + ${product.id}}">
+                                        <i class="fa fa-eye text-primary me-2"></i>View detail
+                                    </a>
+                                </small>
+                                <small class="w-50 text-center py-2">
+                                    <a href="#"
+                                       class="btn-add-to-cart text-body"
+                                       th:attr="data-id=${product.id}">
+                                        <i class="fa fa-shopping-bag text-primary me-2"></i>Add to cart
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- (B) Nếu ĐANG lọc => chỉ hiển thị 1 tab (của activeCategory) -->
+            <div th:if="${selectedCatId != null or selectedSubId != null}"
+                 th:id="${'tab-' + (activeCategory != null ? activeCategory.id : 0)}"
+                 class="tab-pane fade show p-0 active">
+                <div class="row g-4">
+                    <div th:if="${activeCategory != null}"
+                         class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
+                         data-wow-delay="0.1s"
+                         th:each="product : ${productsByCategory[activeCategory.id]}">
+                        <div class="product-item">
+                            <div class="position-relative bg-light overflow-hidden">
+                                <img class="img-fluid w-100" th:src="${product.image}" alt="">
+                            </div>
+                            <div class="text-center p-4">
+                                <a class="d-block h5 mb-2 text-limit"
+                                   th:href="@{'/product-details/' + ${product.id}}"
+                                   th:text="${product.productName}">Tên sản phẩm</a>
+                                <span class="text-primary me-1"
+                                      th:text="${#numbers.formatDecimal(product.price, 1, 'POINT', 0, 'COMMA')} + ' VNĐ'">
+                                        Giá
+                                    </span>
+                            </div>
+                            <div class="d-flex border-top">
+                                <small class="w-50 text-center border-end py-2">
+                                    <a class="text-body" th:href="@{'/product-details/' + ${product.id}}">
+                                        <i class="fa fa-eye text-primary me-2"></i>View detail
+                                    </a>
+                                </small>
+                                <small class="w-50 text-center py-2">
+                                    <a href="#"
+                                       class="btn-add-to-cart text-body"
+                                       th:attr="data-id=${product.id}">
+                                        <i class="fa fa-shopping-bag text-primary me-2"></i>Add to cart
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" th:if="${activeCategory == null}">
+                        <p>Không tìm thấy danh mục phù hợp.</p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.tab-content -->
+    </div><!-- /.container -->
+</div><!-- /.layout-product -->
+

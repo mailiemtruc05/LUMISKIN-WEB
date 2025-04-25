@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="master/head::head"></div>
+
+  <body>
+    <!-- Spinner Start -->
+    <div th:replace="master/layout-spinner::spinner"></div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <div th:replace="master/layout-navbar::navbar"></div>
+
+    <!-- Navbar End -->
+    <!-- header -->
+
+
+    <!-- Carousel Start -->
+    <div th:replace="master/layout-carousel::carousel"></div>
+
+    <!-- Carousel End -->
+
+    <!-- About Start -->
+    <div class="container-xxl py-5">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <!-- Thay ảnh bằng video -->
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <div class="about-video position-relative overflow-hidden p-5 pe-0">
+              <video class="img-fluid w-100" autoplay loop muted>
+                <source src="https://marketplace.canva.com/EAFC-dWssVA/3/document_400w/canva-cROiT0lkw34.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video.
+              </video>
+            </div>
+          </div>
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <h1 class="mb-4" style="font-size: 45px;"> LUMISKIN – Đánh Thức Vẻ Đẹp Tự Nhiên Của Bạn </h1>
+            <p class="mb-4">
+              Chào mừng bạn đến với <b>LUMISKIN</b> – nơi cung cấp những sản phẩm chăm sóc da cao cấp, giúp bạn sở hữu làn da rạng rỡ và tràn đầy sức sống. Chúng tôi tin rằng mỗi làn da đều có nét đẹp riêng, chỉ cần được chăm sóc đúng cách sẽ trở nên hoàn hảo hơn mỗi ngày!
+            </p>
+            <p>
+              ✔︎ <b>Công thức chuyên biệt:</b> Kết hợp tinh chất thiên nhiên & công nghệ tiên tiến
+            </p>
+            <p>
+              ✔︎ <b>Hiệu quả vượt trội:</b> Làm sáng da, mờ thâm nám & ngăn ngừa lão hóa
+            </p>
+            <p>
+              ✔︎ <b>An toàn tuyệt đối:</b> Phù hợp với mọi loại da, kể cả da nhạy cảm
+            </p>
+            <p>
+              ✔︎ <b>Cam kết chất lượng:</b> Được hàng nghìn khách hàng tin dùng và đánh giá cao
+            </p>
+            <a class="btn btn-red rounded-pill py-3 px-5 mt-3" href="product">Khám Phá Ngay</a>
+            <p class="mt-4">
+              📩 Hỗ trợ khách hàng: <a href="mailto:contact@lumiskin.vn">contact@lumiskin.vn</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Feature Start -->
+    <div class="container-fluid bg-light bg-icon my-5 py-6">
+      <div class="container">
+        <div
+          class="section-header text-center mx-auto mb-5 wow fadeInUp"
+          data-wow-delay="0.1s"
+          style="max-width: 500px"
+        >
+          <h1 class="display-5 mb-3">Lợi ích tuyệt vời dành cho làn da</h1>
+          <p>
+            O’Muse mỹ phẩm thuần chay không chỉ đem tới những
+            duỡng chất thanh khiết, lành tính cho sức khoẻ và làn da của Nàng
+            mà còn góp phần bảo vệ môi trường và an toàn với cộng đồng.
+          </p>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="bg-white text-center h-100 p-4 p-xl-5">
+              <img class="img-fluid mb-4" src="img/icon4-removebg-preview.png" alt="" />
+              <h4 class="mb-3">Natural Process</h4>
+              <p class="mb-4">
+              Tăng cường khả năng tự bảo vệ của làn da, tái tạo làn da từ tầng sâu
+              </p>
+              <a
+                class="btn btn-outline-red border-2 py-2 px-4 rounded-pill"
+                href="https://www.vinmec.com/vie/bai-viet/huong-dan-quy-trinh-cham-soc-da-tu-nhien-toan-hieu-qua-vi"target="_blank">Read More</a
+              >
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="bg-white text-center h-100 p-4 p-xl-5">
+              <img class="img-fluid mb-4" src="img/icon2-removebg-preview.png" alt="" />
+              <h4 class="mb-3">Organic Products</h4>
+              <p class="mb-4">
+                Nuôi dưỡng làn da khỏe mạnh
+              </p>
+              <a
+                class="btn btn-outline-red border-2 py-2 px-4 rounded-pill"
+                href="https://geneworld.vn/san-pham-organic"target="_blank">Read More</a
+              >
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+            <div class="bg-white text-center h-100 p-4 p-xl-5">
+              <img class="img-fluid mb-4" src="img/icon3-removebg-preview.png" alt="" />
+              <h4 class="mb-3">Biologically Safe</h4>
+              <p class="mb-4">
+               An toàn và lành tính, không gây kích ứng trên da
+              </p>
+              <a
+                class="btn btn-outline-red border-2 py-2 px-4 rounded-pill"
+                href="https://nhathuoclongchau.com.vn/bai-viet/tong-hop-cac-cau-hoi-thuong-gap-ve-da-va-bi-quyet-cham-soc-da-hang-ngay.html"target="_blank">Read More</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Feature End -->
+
+    <!-- Product Start -->
+    <div th:replace="master/layout-product::product"></div>
+
+    <!-- Product End -->
+
+    <!-- Firm Visit Start -->
+    <div class="container-fluid bg-icon ">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <img
+          class="nav-img"
+          src="/img/nav.png"
+          alt=""
+        />
+        </div>
+      </div>
+    </div>
+    
+    <!-- Firm Visit End -->
+
+    <!-- Testimonial Start -->
+    <div class="container-fluid bg-light bg-icon py-5 mb-5">
+      <div class="container">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp"
+             data-wow-delay="0.1s"
+             style="max-width: 500px;">
+          <h1 class="display-5 mb-3 text-danger">🔥 SIÊU SALE 🔥<br> GIẢM 50%  </h1>
+          <p class="fw-bold">
+            Chương trình "GIẢM 50%" ĐỘC QUYỀN đã trở lại!<br>
+            Săn ngay:Toner trắng da 0đ, Kem chống nắng 0đ, Sữa rửa mặt 0đ và nhiều sản phẩm khác.
+          </p>
+          <p class="text-danger fw-bold">
+            ⏳ Chỉ diễn ra vào THỨ 6 hàng tuần - Số lượng CÓ HẠN!
+            👉 Mua ngay kẻo hết hàng!
+          </p>
+        </div>
+
+        <!-- Hiển thị sản phẩm sale nếu có -->
+        <div th:if="${not #lists.isEmpty(saleProducts)}" class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+          <div th:each="product : ${saleProducts}" class="testimonial-item position-relative mt-4">
+            <i class="fa fa-quote-left fa-3x text-red position-absolute top-0 start-0 mt-n4 ms-5"></i>
+
+            <!-- Hình ảnh sản phẩm với overlay giảm giá -->
+            <div class="">
+              <img th:src="${product.image != null and #strings.startsWith(product.image, 'http') ? product.image : '/img/default.jpg'}"
+                   alt="Sản phẩm sale" class="img-fluid">
+
+              <!-- Nhãn giảm giá 50% -->
+              <div class="sale-badge position-absolute top-0 end-0 bg-danger text-white px-2 py-1">
+                -50%
+              </div>
+            </div>
+
+            <div class="text-center mt-3">
+              <a class="btn btn-outline-red-bg border-2 py-2 px-4 rounded-pill"
+                 th:href="@{'/product-details/' + ${product.id}}">
+                Xem chi tiết
+              </a>
+            </div>
+          </div>
+          <!-- Thông báo khi không có sản phẩm sale -->
+        <div th:if="${#lists.isEmpty(saleProducts)}" class="text-center text-muted mt-4">
+          <p>Hiện không có sản phẩm sale nào.</p>
+        </div>
+      </div>
+     </div>
+    </div>
+
+
+    <!-- Testimonial End -->
+
+    <!-- Blog Start -->
+    <div th:replace="master/layout-blog::blog"></div>
+
+    <!-- Blog End -->
+
+    <!-- Footer Start -->
+    <div th:replace="master/layout-footer::footer"></div>
+
+  <!-- Footer End -->
+
+  <!-- Back to Top -->
+  <a
+    href="#"
+    class="btn btn-lg btn-pink btn-lg-square rounded-circle back-to-top"
+    ><i class="bi bi-arrow-up"></i
+  ></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+  </body>
+
+</html>

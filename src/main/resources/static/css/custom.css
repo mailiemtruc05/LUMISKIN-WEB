@@ -1,0 +1,9 @@
+/* Giới hạn chiều cao và bật scroll dọc */
+.cart-scroll-wrapper {
+    max-height: 300px;    /* điều chỉnh theo giao diện */
+    overflow-y: auto;     /* bật thanh cuộn dọc */
+    /* Optional: thêm border hoặc background để rõ khung */
+    /* border: 1px solid #ddd;
+       padding: 0.5rem;
+       border-radius: 0.25rem; */
+}
